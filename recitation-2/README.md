@@ -71,5 +71,5 @@ https://api.census.gov/data/2019/pep/charagegroups?get=NAME,POP&in=state:42&for=
 3. Under 18 Asian population of Pennsylvania
 
 ```
-https://api.census.gov/data/2019/pep/charagegroups?get=NAME,POP&for=state:42
+https://api.census.gov/data/2019/pep/charagegroups?get=NAME,POP&RACE=10&AGEGROUP=19&for=state:42
 ```
