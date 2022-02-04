@@ -59,3 +59,6 @@ def test_check_guess_icack_check() :
 def test_check_guess_ccbcc_cacbc() :
     assert check_guess('ccbcc', 'cacbc') == '* $ $ _ *'
 
+#TODO write at least one test for `valid_guess_length`
+#TODO write at least one test for `guess_in_dict`
+#TODO write at least one test for `pick_word`
