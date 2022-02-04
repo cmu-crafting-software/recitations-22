@@ -112,12 +112,25 @@ def check_guess(guess_word, answer_word) :
 def valid_guess_length(guess_word) :
     #TODO: check if `guess_word` is longer than MAX_SIZE
     #TODO: replace the line below
-    return False
+    if (len(guess_word) != MAX_SIZE):
+        return False
+    else: 
+        return True
+
+myDict = {
+    "pizza": "",
+    "pasta": "",
+    "bread": "" 
+
+}
 
 def guess_in_dict(guess_word, dict) :
     #TODO: check if `guess_word` is in the dictionary
     #TODO: replace the line below
-    return False
+    if dict.get(guess_word) is not None:
+        return True 
+    else: 
+        return False
 
 # Input: the guess word, the answer word, and a dictionary of all possible guesses
 #   assumes the answer word is in the dictionary
@@ -126,9 +139,9 @@ def guess_in_dict(guess_word, dict) :
 # either because it is longer than MAX_SIZE or not in `dict` then the 
 # output is the INVALID_GUESS string. 
 def process_guess(guess_word, answer_word, dict) :
-    if valid_guess_length :
+    if valid_guess_length(guess_word) :
         return INVALID_GUESS
-    elif not(guess_in_dict):
+    elif not(guess_in_dict(guess_word, dict)):
         return INVALID_GUESS
     return check_guess(guess_word, answer_word)
 
