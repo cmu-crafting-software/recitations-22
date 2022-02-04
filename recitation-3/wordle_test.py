@@ -1,19 +1,19 @@
-from wordle import unique, hint_repeated_char as hrc, positions, check_guess
+from wordle import unique, hint_repeated_char, positions, check_guess
 
 def test_hint_repeated_char() :
-    assert hrc([0,1], [0,1], ['_', '_']) == ['*', '*']
+    assert hint_repeated_char([0,1], [0,1], ['_', '_']) == ['*', '*']
 
 def test_hrc_letter_overlap() :
-    assert hrc([0,2], [1,2], ['_', '_', '_']) == ['$', '_', '*']
+    assert hint_repeated_char([0,2], [1,2], ['_', '_', '_']) == ['$', '_', '*']
 
 def test_hrc_letter_no_overlap():
-    assert hrc([0,1], [2], ['_','_','_']) == ['$','_','_']
+    assert hint_repeated_char([0,1], [2], ['_','_','_']) == ['$','_','_']
 
 def test_hrc_letter_no_overlap2():
-    assert hrc([0,2], [1], ['_','_','_']) == ['$','_','_']
+    assert hint_repeated_char([0,2], [1], ['_','_','_']) == ['$','_','_']
 
 def test_hrc_3():
-    assert hrc([0,1,2,3], [0,2,3], ['_','_','_','_']) == ['*','_','*','*']
+    assert hint_repeated_char([0,1,2,3], [0,2,3], ['_','_','_','_']) == ['*','_','*','*']
 
 def test_unique_oneletter() :
     assert unique('a', 0) == True
