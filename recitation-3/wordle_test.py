@@ -1,4 +1,4 @@
-from wordle import unique, hint_repeated_char as hrc, positions, check_guess
+from wordle import guess_in_dict, unique, hint_repeated_char as hrc, positions, check_guess, valid_guess_length
 
 def test_hint_repeated_char() :
     assert hrc([0,1], [0,1], ['_', '_']) == ['*', '*']
@@ -58,4 +58,22 @@ def test_check_guess_icack_check() :
     assert check_guess('icack', 'check') == '_ $ _ * *'
 def test_check_guess_ccbcc_cacbc() :
     assert check_guess('ccbcc', 'cacbc') == '* $ $ _ *'
+
+def test_valid_guess_length_five() :
+    assert valid_guess_length('fifth') == True
+def test_valid_guess_length_four() :
+    assert valid_guess_length('four') == False
+def test_valid_guess_length_six() :
+    assert valid_guess_length('eighth') == False
+
+myDict = {'thorn': 'value', 'shard': 'value', 'heart': 'value'}
+
+def test_guess_in_dict_seven():
+    assert guess_in_dict('seven', {'seven'}) == True
+def test_guess_in_dict_thorn():
+    assert guess_in_dict('thorn', {'seven'}) == False
+def test_guess_in_dict_shard():
+    assert guess_in_dict('shard', myDict) == True
+def test_guess_in_dict_heart():
+    assert guess_in_dict('heart', myDict) == True
 
