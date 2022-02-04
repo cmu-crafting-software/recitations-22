@@ -15,6 +15,15 @@ IN_WORD : Final = "$"
 # in the answer word in the same position
 CORRECT : Final = "*"
 
+# string returned when guess is invalid
+INVALID_GUESS : Final = "Your guess is invalid."
+
+# string returned when guess is invalid
+MAX_SIZE : Final = 5
+
+# The number of days until an answer can be reused
+DAYS_UNTIL_ANSWER_REUSED : Final = 30
+
 # returns true if ith letter in `word` is appears exactly once
 # returns false otherwise
 def unique(word, i) :
@@ -99,3 +108,38 @@ def check_guess(guess_word, answer_word) :
             )
 
     return ' '.join(hint)
+
+def valid_guess_length(guess_word) :
+    #TODO: check if `guess_word` is longer than MAX_SIZE
+    #TODO: replace the line below
+    return False
+
+def guess_in_dict(guess_word, dict) :
+    #TODO: check if `guess_word` is in the dictionary
+    #TODO: replace the line below
+    return False
+
+# Input: the guess word, the answer word, and a dictionary of all possible guesses
+#   assumes the answer word is in the dictionary
+# Output: 
+# If the guess is valid, output is the same as `check_guess`. If the guess is invalid,
+# either because it is longer than MAX_SIZE or not in `dict` then the 
+# output is the INVALID_GUESS string. 
+def process_guess(guess_word, answer_word, dict) :
+    if valid_guess_length :
+        return INVALID_GUESS
+    elif not(guess_in_dict):
+        return INVALID_GUESS
+    return check_guess(guess_word, answer_word)
+
+# Input: A dictionary where keys are valid wordle words and values are 
+# are the last date the word was picked.
+# Output: The answer word
+# The dictionary will be modified such that the answer picked will have today's date as a value
+def pick_word(dict) :
+    #TODO: pick a random word from the dictionary
+    #Hint: use the random python module. See: https://docs.python.org/3/library/random.html
+    #TODO: stretch goal pick a random word that has not been used in DAYS_UNTIL_ANSWER_REUSED days
+    
+    #TODO: replace the line below
+    return 'RADIO'
