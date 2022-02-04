@@ -111,8 +111,10 @@ def check_guess(guess_word, answer_word) :
 
 def valid_guess_length(guess_word) :
     #TODO: check if `guess_word` is longer than MAX_SIZE
-    #TODO: replace the line below
-    return False
+    if len(guess_word)!=5:
+        return False
+    else :
+        return True
 
 def guess_in_dict(guess_word, dict) :
     #TODO: check if `guess_word` is in the dictionary
@@ -126,7 +128,7 @@ def guess_in_dict(guess_word, dict) :
 # either because it is longer than MAX_SIZE or not in `dict` then the 
 # output is the INVALID_GUESS string. 
 def process_guess(guess_word, answer_word, dict) :
-    if valid_guess_length :
+    if valid_guess_length(guess_word):
         return INVALID_GUESS
     elif not(guess_in_dict):
         return INVALID_GUESS
