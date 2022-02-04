@@ -19,7 +19,7 @@ CORRECT : Final = "*"
 INVALID_GUESS : Final = "Your guess is invalid."
 
 # string returned when guess is invalid
-MAX_SIZE : Final = 5
+SIZE : Final = 5
 
 # The number of days until an answer can be reused
 DAYS_UNTIL_ANSWER_REUSED : Final = 30
@@ -123,12 +123,12 @@ def guess_in_dict(guess_word, dict) :
 #   assumes the answer word is in the dictionary
 # Output: 
 # If the guess is valid, output is the same as `check_guess`. If the guess is invalid,
-# either because it is longer than MAX_SIZE or not in `dict` then the 
+# either because it is longer than SIZE or not in `dict` then the 
 # output is the INVALID_GUESS string. 
 def process_guess(guess_word, answer_word, dict) :
-    if valid_guess_length :
+    if valid_guess_length(guess_word) :
         return INVALID_GUESS
-    elif not(guess_in_dict):
+    elif not(guess_in_dict(guess_word, dict)):
         return INVALID_GUESS
     return check_guess(guess_word, answer_word)
 
