@@ -1,8 +1,5 @@
 import json
 import random
-from lib2to3.pytree import LeafPattern
-from operator import truediv
-from tokenize import Strin
 
 # hint used for a character in the guess word that
 # does not appear in the answer_word
@@ -27,49 +24,66 @@ DAYS_UNTIL_ANSWER_REUSED = 30
 
 
 class WordleGame:
-    '''
+    """
     `WordleGame` represents a Wordle game with both interactive and programmatic interfaces.
-    '''
+    """
 
     def __init__(self, dictionary_path, answer=None):
+        """
+        Constructs a `WordleGame` object with an optional `answer` word.
+        """
         # load the dictionary
         self.words = load_words(dictionary_path)
         # if there's a predefined answer, use it
         if answer:
-            self.answerWord = answer
+            self.answer_word = answer
         # otherwise, generate a new answer word from the dictionary
         else:
-            self.answerWord = pick_word(self.words)
+            self.answer_word = pick_word(self.words)
         # keep a history of guesses
         self.guess_history = []
-        print("Answer is:", self.answerWord)
+        # keep a flag that indicates if the game has been won
+        self.game_won = False
+        # keep a __set__ of characters used in the game
+        self.chars_used = {}
+        # print("Answer is:", self.answerWord)
 
     def guess(self, guess_word):
-        guess_result = process_guess(guess_word, self.answerWord, self.words)
-        display_result = display_guess(guess_result)
-        if not guess_result == INVALID_GUESS:
-            self.guess_history.append(display_result)
-        return display_result
+        """
+        Take a guess in the Wordle game. This function also records the guess if it's valid.
+        """
+        guess_result = process_guess(guess_word, self.answer_word, self.words)
+        if guess_result != INVALID_GUESS:
+            self.guess_history.append(guess_result)
+        if guess_word == self.answer_word:
+            self.game_won = True
+        return guess_result
 
     def play(self):
-        print("welcome to Wordle, what is your first guess:")
-        lastGuessCorrect = False
-        while(not lastGuessCorrect):
+        """
+        Play the wordle game interactively.
+        """
+        print("Welcome to Wordle. What is your first guess:")
+        while(not self.game_won):
             guess = input()
-            lastGuessAnswer = self.guess(guess)
-            print(lastGuessAnswer)
-            if guess == self.answerWord:
-                print("YAY! You won!")
-                print("Tweet your progress:")
-                print("\n".join(self.guess_history))
-                lastGuessCorrect = True
+            last_answer = self.guess(guess)
+            print(display_guess(last_answer))
+            if self.game_won:
+                print("YAY! You won! Tweet your result:")
+                self.showHistory()
+
+    def showHistory(self):
+        """
+        Print out the history of guesses in this game.
+        """
+        print("\n".join(map(lambda res: display_guess(res), self.guess_history)))
 
 
 def unique(word, i):
-    '''
+    """
     returns true if ith letter in `word` is appears exactly once
     returns false otherwise
-    '''
+    """
     letter_frequency = {}
     for j in range(len(word)):
         k = word[j]
@@ -81,10 +95,10 @@ def unique(word, i):
 
 
 def positions(word, char):
-    '''
+    """
     Input: a word and a character to look for
     Output: returns index list of occurrences `char` in `word`
-    '''
+    """
     positions = []
     for i in range(len(word)):
         if word[i] == char:
@@ -93,7 +107,7 @@ def positions(word, char):
 
 
 def hint_repeated_char(guess_positions, answer_positions, hint):
-    '''
+    """
     Input:
     * `guess_positions` and `answer_positions` have equal length
     * list of integer indices to a char repeated in the answer
@@ -101,7 +115,7 @@ def hint_repeated_char(guess_positions, answer_positions, hint):
 
     Output:
     * returns modified copy of `hint``
-    '''
+    """
     matched = False
     hint_copy = hint[:]
     ap_copy = answer_positions[:]
@@ -125,17 +139,20 @@ def hint_repeated_char(guess_positions, answer_positions, hint):
 
 
 def display_guess(hint):
-    return ' '.join(hint)
+    if hint == INVALID_GUESS:
+        return hint
+    else:
+        return ' '.join(hint)
 
 
 def check_guess(guess_word, answer_word):
-    '''
+    """
     Input: two five character string
-    Output: five character string where each character
+    Output: five character list where each character
     is the INCORRECT, IN_WORD, or CORRECT character
     each character in the output corresponds to a character
     in the same position in the guess_word
-    '''
+    """
     # used to collect the hints for each character
     # in guess_word
     hint = [INCORRECT, INCORRECT, INCORRECT, INCORRECT, INCORRECT]
@@ -166,31 +183,34 @@ def check_guess(guess_word, answer_word):
 
     return hint
 
-# Output:
-# * returns true if `guess_word` is SIZE characters long
-# * returns false otherwise
-
 
 def valid_guess_length(guess_word):
+    """
+    Output:
+    * returns true if `guess_word` is SIZE characters long
+    * returns false otherwise
+    """
     return len(guess_word) == SIZE
-
-# Output:
-# * returns true if `guess_word` is in `dict`
-# * returns false otherwise
 
 
 def guess_in_dict(guess_word, dict):
+    """
+    Output:
+    * returns true if `guess_word` is in `dict`
+    * returns false otherwise
+    """
     return guess_word in dict.keys()
-
-# Input: the guess word, the answer word, and a dictionary of all possible guesses
-#   assumes the answer word is in the dictionary
-# Output:
-# If the guess is valid, output is the same as `check_guess`. If the guess is invalid,
-# either because it is longer than SIZE or not in `dict` then the
-# output is the INVALID_GUESS string.
 
 
 def process_guess(guess_word, answer_word, dict):
+    """
+    Input: the guess word, the answer word, and a dictionary of all possible guesses
+    assumes the answer word is in the dictionary
+    Output:
+    If the guess is valid, output is the same as `check_guess`. If the guess is invalid,
+    either because it is longer than SIZE or not in `dict` then the
+    output is the INVALID_GUESS string.
+    """
     if not valid_guess_length(guess_word):
         return INVALID_GUESS
     elif not(guess_in_dict(guess_word, dict)):
@@ -199,34 +219,55 @@ def process_guess(guess_word, answer_word, dict):
         return check_guess(guess_word, answer_word)
 
 
-def pick_word(dict):
+def pick_word(words: dict):
     """
     Input: A dictionary where keys are valid wordle words and values are
     are the last date the word was picked.
     Output: The answer word, which has not been used in `DAYS_UNTIL_ANSWER_REUSED` days
     The dictionary will be modified such that the answer picked will have today's date as a value
     """
-    # TODO: pick a random word from the dictionary
-    # Hint: use the random python module. See: https://docs.python.org/3/library/random.html
     # TODO: stretch goal pick a random word that has not been used in DAYS_UNTIL_ANSWER_REUSED days
     random_word = ''
-    while(not len(random_word) == 5):
+    while len(random_word) != 5:
         try:
-            random_word = random.choice(list(dict.keys()))
-            assert (len(random_word == 5))
-        except:
-            print("wrong Length word")
+            random_word = random.choice(list(words.keys()))
+            assert len(random_word) == 5
+        except AssertionError:
+            pass
+            # print("wrong Length word")
     return random_word
 
 
 def load_words(path):
+    """
+    Load a dictionary from a file
+    """
     with open(path) as json_file:
         words = json.load(json_file)
     return words
 
 
+def play_wordle_games(times, dict_path):
+    success = 0
+    answer_set = {}
+    # play the game n times
+    for i in range(0, times):
+        # instantiate a wordle game object
+        game = WordleGame(dict_path)
+        # take 5 guesses randomly
+        for _ in range(5):
+            guess_word = pick_word(game.words)
+            guess_result = game.guess(guess_word)
+        if game.game_won:
+            success += 1
+        print(f"Game {i} result: ")
+        game.showHistory()
+    print(f"Success rate: {success / times * 100}%")
+    return success
+
+
 if __name__ == "__main__":
     dict_path = './words.json'
     wordle = WordleGame(dict_path)
-    # wordle = WordleGame(dict_path, answer="rupea")
     wordle.play()
+    # play_wordle_games(100, dict_path)
