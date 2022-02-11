@@ -5,24 +5,24 @@ from typing import Final
 
 # hint used for a character in the guess word that 
 # does not appear in the answer_word
-INCORRECT : Final = "_"
+INCORRECT = "_"
 
 # hint used for a character in the guess word that 
 # appears in the answer word, but not in the same position
-IN_WORD : Final = "$"
+IN_WORD = "$"
 
 # hint used for a character in the guess word that appears
 # in the answer word in the same position
-CORRECT : Final = "*"
+CORRECT = "*"
 
 # string returned when guess is invalid
-INVALID_GUESS : Final = "Your guess is invalid."
+INVALID_GUESS = "Your guess is invalid."
 
 # string returned when guess is invalid
-MAX_SIZE : Final = 5
+SIZE = 5
 
 # The number of days until an answer can be reused
-DAYS_UNTIL_ANSWER_REUSED : Final = 30
+DAYS_UNTIL_ANSWER_REUSED = 30
 
 # returns true if ith letter in `word` is appears exactly once
 # returns false otherwise
@@ -136,7 +136,7 @@ def guess_in_dict(guess_word, dict) :
 #   assumes the answer word is in the dictionary
 # Output: 
 # If the guess is valid, output is the same as `check_guess`. If the guess is invalid,
-# either because it is longer than MAX_SIZE or not in `dict` then the 
+# either because it is longer than SIZE or not in `dict` then the 
 # output is the INVALID_GUESS string. 
 def process_guess(guess_word, answer_word, dict) :
     if valid_guess_length(guess_word) :
