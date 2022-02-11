@@ -46,9 +46,9 @@ class WordleGame:
         # keep a flag that indicates if the game has been won
         self.game_won = False
         # keep a __set__ of characters used in the game
-        self.chars_used = set()
+        self.letters_used = set()
         # keep a __set__ of characters included in the answer
-        self.answer_chars = set()
+        self.used_answer_letters = set()
         # print("Answer is:", self.answerWord)
 
     def guess(self, guess_word):
@@ -59,19 +59,20 @@ class WordleGame:
         # update game state with new date if the guess is valid
         if guess_result != INVALID_GUESS:
             self.hint_history.append(guess_result)
-            self.chars_used = self.chars_used.union(set(guess_word))
-            self.answer_chars = self.answer_chars.union(
+            self.letters_used = self.letters_used.union(set(guess_word))
+            self.used_answer_letters = self.used_answer_letters.union(
                 filter(lambda c: c in self.answer_word, list(guess_word)))
             if guess_word == self.answer_word:
                 self.game_won = True
         return guess_result
 
-    def chars_left(self):
+    def valid_letters(self):
         alphabet = set(string.ascii_lowercase)
-        used_but_incorrect = self.chars_used.difference(self.answer_chars)
+        used_but_incorrect = self.letters_used.difference(
+            self.used_answer_letters)
         return alphabet.difference(used_but_incorrect)
 
-    def play(self):
+    def play(self, char_hint=False):
         """
         Play the wordle game in an interactive mode.
         """
@@ -80,6 +81,10 @@ class WordleGame:
             guess = input()
             last_answer = self.guess(guess)
             print(display_hint(last_answer))
+            if(char_hint):
+                valid_chars = list(self.valid_letters())
+                valid_chars.sort()
+                print("Valid characters left: ", valid_chars)
             if self.game_won:
                 print("YAY! You won! Tweet your result:")
                 self.show_history()
@@ -264,7 +269,6 @@ def load_words(path):
 
 def play_wordle_games(times, dict_path):
     success = 0
-    answer_set = {}
     # play the game n times
     for i in range(0, times):
         # instantiate a wordle game object
@@ -272,7 +276,7 @@ def play_wordle_games(times, dict_path):
         # take 5 guesses randomly
         for _ in range(5):
             guess_word = pick_word(game.words)
-            guess_result = game.guess(guess_word)
+            game.guess(guess_word)
         if game.game_won:
             success += 1
         print(f"Game {i} result: ")
@@ -284,9 +288,5 @@ def play_wordle_games(times, dict_path):
 if __name__ == "__main__":
     dict_path = './words.json'
     wordle = WordleGame(dict_path, answer="bible")
-    wordle.guess("apple")
-    print(wordle.chars_left())
-    print(wordle.chars_used)
-    print(wordle.answer_chars)
-    # wordle.play()
+    wordle.play(char_hint=True)
     # play_wordle_games(100, dict_path)
