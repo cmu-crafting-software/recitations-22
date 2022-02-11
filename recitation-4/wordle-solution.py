@@ -29,12 +29,11 @@ class WordleGame:
     `WordleGame` represents a Wordle game with both interactive and programmatic interfaces.
     """
 
-    def __init__(self, dictionary_path, answer=None):
+    def __init__(self, words, answer=None):
         """
         Constructs a `WordleGame` object with an optional `answer` word.
         """
-        # load the dictionary
-        self.words = load_words(dictionary_path)
+        self.words = words
         # if there's a predefined answer, use it
         if answer:
             self.answer_word = answer
@@ -49,6 +48,7 @@ class WordleGame:
         self.letters_used = set()
         # keep a __set__ of characters included in the answer
         self.used_answer_letters = set()
+        # print("Answer is:", self.answerWord)
 
     def guess(self, guess_word):
         """
@@ -66,31 +66,12 @@ class WordleGame:
         return guess_result
 
     def valid_letters(self):
-        """
-        Return a set of valid letters for the next guess, defined as:
-        * Letters that are in the answer
-        * OR letters that are not used so far
-
-        NOTE: the wordle game keeps track of:
-        * letters used by the player so far (`letters_used`)
-        * letters used and in the answer so far (`used_answer_letters`)
-
-        TODO: use these two pieces of info to compute the set of valid letters
-        """
-        # `alphabet` is a set of lowercase ASCII letters
         alphabet = set(string.ascii_lowercase)
+        used_but_incorrect = self.letters_used.difference(
+            self.used_answer_letters)
+        return alphabet.difference(used_but_incorrect)
 
-
-<< << << < HEAD
-       # find all used but not correct letters
-   used_but_incorrect = self.letters_used.difference(
-        self.used_answer_letters)
-    return alphabet.difference(used_but_incorrect)
-== == == =
-   return set()
->>>>>> > main
-
-   def play(self, char_hint=False):
+    def play(self, char_hint=False):
         """
         Play the wordle game in an interactive mode.
         """
@@ -264,6 +245,7 @@ def pick_word(words: dict):
     Output: The answer word, which has not been used in `DAYS_UNTIL_ANSWER_REUSED` days
     The dictionary will be modified such that the answer picked will have today's date as a value
     """
+    # TODO: stretch goal pick a random word that has not been used in DAYS_UNTIL_ANSWER_REUSED days
     random_word = ''
     while len(random_word) != 5:
         try:
@@ -271,6 +253,7 @@ def pick_word(words: dict):
             assert len(random_word) == 5
         except AssertionError:
             pass
+            # print("wrong Length word")
     return random_word
 
 
@@ -283,20 +266,27 @@ def load_words(path):
     return words
 
 
-def play_wordle_games(n, dict_path):
-    """
-    Play the Wordle game `n` times.
-    """
-    # TODO: play the game n times:
-    # TODO: instantiate a wordle game object
-    # TODO: take 5 guesses randomly
-    # TODO: print the history of guesses
-    # TODO: report success rate
-    pass
+def play_wordle_games(times, words):
+    success = 0
+    # play the game n times
+    for i in range(0, times):
+        # instantiate a wordle game object
+        game = WordleGame(words)
+        # take 5 guesses randomly
+        for _ in range(5):
+            guess_word = pick_word(game.words)
+            game.guess(guess_word)
+        if game.game_won:
+            success += 1
+        print(f"Game {i} result: ")
+        game.show_history()
+    print(f"Success rate: {success / times * 100}%")
+    return success
 
 
 if __name__ == "__main__":
     dict_path = './words.json'
-    wordle = WordleGame(dict_path)
+    dictionary = load_words(dict_path)
+    wordle = WordleGame(dictionary, answer="bible")
     wordle.play(char_hint=True)
-    # TODO: play the wordle game using methods in `WordleGame`
+    # play_wordle_games(100, dictionary)
