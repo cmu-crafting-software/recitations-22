@@ -79,7 +79,9 @@ class WordleGame:
         """
         # `alphabet` is a set of lowercase ASCII letters
         alphabet = set(string.ascii_lowercase)
-        return set()
+        used_but_incorrect = self.letters_used.difference(
+            self.used_answer_letters)
+        return alphabet.difference(used_but_incorrect)
 
     def play(self, char_hint=False):
         """
@@ -279,15 +281,43 @@ def play_wordle_games(n, dict_path):
     Play the Wordle game `n` times.
     """
     # TODO: play the game n times:
-    # TODO: instantiate a wordle game object
-    # TODO: take 5 guesses randomly
-    # TODO: print the history of guesses
-    # TODO: report success rate
-    pass
+    games_won = 0
+    for i in range(n):
+        print("Game ", i+1)
+        # TODO: instantiate a wordle game object
+        wordle = WordleGame(dict_path)
+        # TODO: take 5 guesses randomly
+        for j in range(5):
+            random_guess = pick_word(wordle.words)
+            while not lettersAllPossible(random_guess, wordle.valid_letters()):
+                random_guess = pick_word(wordle.words)
+            wordle.guess(random_guess)
+            if wordle.game_won:
+                break
+        # TODO: print the history of guesses
+        if wordle.game_won:
+            games_won += 1
+        wordle.show_history()
+    print("Played "+ str(n)+ " games and won "+ str(games_won) + " of them")
 
+    # TODO: report success rate
+
+def lettersAllPossible(word, valid_letters):
+    for a in word:
+        if a not in valid_letters:
+            return False
+    return True
 
 if __name__ == "__main__":
     dict_path = './words.json'
-    wordle = WordleGame(dict_path)
-    wordle.play(char_hint=True)
+    # wordle = WordleGame(dict_path)
+    # wordle.play(char_hint=True)
     # TODO: play the wordle game using methods in `WordleGame`
+    # apple_wordle = WordleGame(dict_path, answer="apple")
+    # apple_wordle.guess("sweet")
+    # apple_wordle.guess("fruit")
+    # apple_wordle.guess("apple")
+    # apple_wordle.show_history()
+    play_wordle_games(10, dict_path)
+
+
