@@ -288,7 +288,8 @@ def play_wordle_games(n, dict_path):
         wordle.show_history()
         if wordle.game_won == True:
             win_count=win_count+1
-    print('win count: ' + str(win_count))
+    win_percent=win_count/n*100
+    print('win percent: ' + str(win_percent))
 
 
     # TODO: play the game n times:
@@ -299,7 +300,7 @@ def play_wordle_games(n, dict_path):
     pass
 
 dict_path='./words.json'
-n=20
+n=10
 play_wordle_games(n,dict_path)
 
 
