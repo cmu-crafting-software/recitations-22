@@ -5,24 +5,24 @@ from typing import Final
 
 # hint used for a character in the guess word that 
 # does not appear in the answer_word
-INCORRECT : Final = "_"
+INCORRECT = "_"
 
 # hint used for a character in the guess word that 
 # appears in the answer word, but not in the same position
-IN_WORD : Final = "$"
+IN_WORD = "$"
 
 # hint used for a character in the guess word that appears
 # in the answer word in the same position
-CORRECT : Final = "*"
+CORRECT = "*"
 
 # string returned when guess is invalid
-INVALID_GUESS : Final = "Your guess is invalid."
+INVALID_GUESS = "Your guess is invalid."
 
 # string returned when guess is invalid
-SIZE : Final = 5
+SIZE = 5
 
 # The number of days until an answer can be reused
-DAYS_UNTIL_ANSWER_REUSED : Final = 30
+DAYS_UNTIL_ANSWER_REUSED = 30
 
 # returns true if ith letter in `word` is appears exactly once
 # returns false otherwise
