@@ -49,7 +49,6 @@ class WordleGame:
         self.letters_used = set()
         # keep a __set__ of characters included in the answer
         self.used_answer_letters = set()
-        # print("Answer is:", self.answerWord)
 
     def guess(self, guess_word):
         """
@@ -263,7 +262,6 @@ def pick_word(words: dict):
             assert len(random_word) == 5
         except AssertionError:
             pass
-            # print("wrong Length word")
     return random_word
 
 
