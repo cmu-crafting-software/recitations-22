@@ -4,15 +4,15 @@ import random
 
 # hint used for a character in the guess word that
 # does not appear in the answer_word
-INCORRECT = "🟥"
+INCORRECT = "_"
 
 # hint used for a character in the guess word that
 # appears in the answer word, but not in the same position
-IN_WORD = "🟨"
+IN_WORD = "$"
 
 # hint used for a character in the guess word that appears
 # in the answer word in the same position
-CORRECT = "🟩"
+CORRECT = "*"
 
 # string returned when guess is invalid
 INVALID_GUESS = "Your guess is invalid."
@@ -79,7 +79,8 @@ class WordleGame:
         """
         # `alphabet` is a set of lowercase ASCII letters
         alphabet = set(string.ascii_lowercase)
-        return set()
+        used_but_incorrect = self.letters_used.difference(self.used_answer_letters)
+        return alphabet.difference(used_but_incorrect)
 
     def play(self, char_hint=False):
         """
@@ -278,16 +279,30 @@ def play_wordle_games(n, dict_path):
     """
     Play the Wordle game `n` times.
     """
+    
+    for i in range(0,n,1):
+        wordle = WordleGame(dict_path)
+        wordle.guess(pick_word)
+        wordle.guess(pick_word)
+        wordle.guess(pick_word)
+        wordle.guess(pick_word)
+        wordle.guess(pick_word)
+        wordle.show_history()
     # TODO: play the game n times:
     # TODO: instantiate a wordle game object
     # TODO: take 5 guesses randomly
     # TODO: print the history of guesses
     # TODO: report success rate
-    pass
+    
 
 
-if __name__ == "__main__":
-    dict_path = './words.json'
-    wordle = WordleGame(dict_path)
-    wordle.play(char_hint=True)
+# if __name__ == "__main__":
+#     dict_path = './words.json'
+#     wordle = WordleGame(dict_path, answer = "apple")
+#     wordle.guess("table")
+#     wordle.guess("skate")
+#     wordle.guess("apple")
+#     wordle.show_history()
+    #wordle.play(char_hint=True)
     # TODO: play the wordle game using methods in `WordleGame`
+play_wordle_games(3, './words.json')
