@@ -23,6 +23,9 @@ SIZE = 5
 # The number of days until an answer can be reused
 DAYS_UNTIL_ANSWER_REUSED = 30
 
+# How many guesses an AI makes in a given game
+MAX_GUESS_AI = 5
+
 
 class WordleGame:
     """
@@ -79,7 +82,9 @@ class WordleGame:
         """
         # `alphabet` is a set of lowercase ASCII letters
         alphabet = set(string.ascii_lowercase)
-        return set()
+        used_but_incorrect = self.letters_used.difference(self.used_answer_letters)
+        valid_letters = alphabet.difference(used_but_incorrect)
+        return valid_letters
 
     def play(self, char_hint=False):
         """
@@ -279,15 +284,35 @@ def play_wordle_games(n, dict_path):
     Play the Wordle game `n` times.
     """
     # TODO: play the game n times:
-    # TODO: instantiate a wordle game object
-    # TODO: take 5 guesses randomly
-    # TODO: print the history of guesses
+    gamecount = 0
+    wincount = 0
+    while gamecount < n:
+        print("starting game " + (str(gamecount)))
+        # TODO: instantiate a wordle game object
+        single_game = WordleGame(dict_path)
+        single_game.guesscount = 0
+        # TODO: take 5 guesses randomly
+        while single_game.guesscount < MAX_GUESS_AI:
+            guess_word = pick_word(single_game.words)
+            single_game.guess(guess_word)
+            single_game.guesscount += 1
+        # TODO: print the history of guesses
+        #single_game.show_history()
+        if single_game.game_won == True:
+            wincount += 1
+        gamecount += 1
+
     # TODO: report success rate
-    pass
+    print(wincount)
 
 
 if __name__ == "__main__":
     dict_path = './words.json'
-    wordle = WordleGame(dict_path)
-    wordle.play(char_hint=True)
+    wordle = WordleGame(dict_path, answer="apple")
+    #wordle.guess("pizza")
+    #wordle.guess("steak")
+    #wordle.guess("apple")
+    #wordle.show_history()
+
+    play_wordle_games(100, dict_path)
     # TODO: play the wordle game using methods in `WordleGame`
