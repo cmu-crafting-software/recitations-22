@@ -79,7 +79,10 @@ class WordleGame:
         """
         # `alphabet` is a set of lowercase ASCII letters
         alphabet = set(string.ascii_lowercase)
-        return set()
+        # find all used but not correct letters
+        used_but_incorrect = self.letters_used.difference(
+            self.used_answer_letters)
+        return alphabet.difference(used_but_incorrect)
 
     def play(self, char_hint=False):
         """
@@ -288,6 +291,6 @@ def play_wordle_games(n, dict_path):
 
 if __name__ == "__main__":
     dict_path = './words.json'
-    wordle = WordleGame(dict_path)
+    wordle = WordleGame(dict_path, answer="apple")
     wordle.play(char_hint=True)
     # TODO: play the wordle game using methods in `WordleGame`
