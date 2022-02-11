@@ -1,4 +1,5 @@
 import json
+import string
 import random
 
 # hint used for a character in the guess word that
@@ -41,11 +42,13 @@ class WordleGame:
         else:
             self.answer_word = pick_word(self.words)
         # keep a history of guesses
-        self.guess_history = []
+        self.hint_history = []
         # keep a flag that indicates if the game has been won
         self.game_won = False
         # keep a __set__ of characters used in the game
-        self.chars_used = {}
+        self.chars_used = set()
+        # keep a __set__ of characters included in the answer
+        self.answer_chars = set()
         # print("Answer is:", self.answerWord)
 
     def guess(self, guess_word):
@@ -53,30 +56,39 @@ class WordleGame:
         Take a guess in the Wordle game. This function also records the guess if it's valid.
         """
         guess_result = process_guess(guess_word, self.answer_word, self.words)
+        # update game state with new date if the guess is valid
         if guess_result != INVALID_GUESS:
-            self.guess_history.append(guess_result)
-        if guess_word == self.answer_word:
-            self.game_won = True
+            self.hint_history.append(guess_result)
+            self.chars_used = self.chars_used.union(set(guess_word))
+            self.answer_chars = self.answer_chars.union(
+                filter(lambda c: c in self.answer_word, list(guess_word)))
+            if guess_word == self.answer_word:
+                self.game_won = True
         return guess_result
+
+    def chars_left(self):
+        alphabet = set(string.ascii_lowercase)
+        used_but_incorrect = self.chars_used.difference(self.answer_chars)
+        return alphabet.difference(used_but_incorrect)
 
     def play(self):
         """
-        Play the wordle game interactively.
+        Play the wordle game in an interactive mode.
         """
         print("Welcome to Wordle. What is your first guess:")
         while(not self.game_won):
             guess = input()
             last_answer = self.guess(guess)
-            print(display_guess(last_answer))
+            print(display_hint(last_answer))
             if self.game_won:
                 print("YAY! You won! Tweet your result:")
-                self.showHistory()
+                self.show_history()
 
-    def showHistory(self):
+    def show_history(self):
         """
         Print out the history of guesses in this game.
         """
-        print("\n".join(map(lambda res: display_guess(res), self.guess_history)))
+        print("\n".join(map(lambda res: display_hint(res), self.hint_history)))
 
 
 def unique(word, i):
@@ -138,7 +150,10 @@ def hint_repeated_char(guess_positions, answer_positions, hint):
         return hint_copy
 
 
-def display_guess(hint):
+def display_hint(hint):
+    """
+    Print out the hint.
+    """
     if hint == INVALID_GUESS:
         return hint
     else:
@@ -261,13 +276,17 @@ def play_wordle_games(times, dict_path):
         if game.game_won:
             success += 1
         print(f"Game {i} result: ")
-        game.showHistory()
+        game.show_history()
     print(f"Success rate: {success / times * 100}%")
     return success
 
 
 if __name__ == "__main__":
     dict_path = './words.json'
-    wordle = WordleGame(dict_path)
-    wordle.play()
+    wordle = WordleGame(dict_path, answer="bible")
+    wordle.guess("apple")
+    print(wordle.chars_left())
+    print(wordle.chars_used)
+    print(wordle.answer_chars)
+    # wordle.play()
     # play_wordle_games(100, dict_path)
