@@ -279,6 +279,18 @@ def play_wordle_games(n, dict_path):
     """
     Play the Wordle game `n` times.
     """
+    win_count=0
+    for i in range(1,n,1):
+        wordle=WordleGame(dict_path,answer='apple')
+        words=load_words(dict_path)
+        for j in range(1,6,1):
+            wordle.guess(pick_word(words))
+        wordle.show_history()
+        if wordle.game_won == True:
+            win_count=win_count+1
+    print('win count: ' + str(win_count))
+
+
     # TODO: play the game n times:
     # TODO: instantiate a wordle game object
     # TODO: take 5 guesses randomly
@@ -286,14 +298,18 @@ def play_wordle_games(n, dict_path):
     # TODO: report success rate
     pass
 
+dict_path='./words.json'
+n=20
+play_wordle_games(n,dict_path)
 
-if __name__ == "__main__":
-    dict_path = './words.json'
-    wordle = WordleGame(dict_path,answer='apple')
-    wordle.guess('truck')
-    wordle.guess('chair')
-    wordle.guess('apple')
-    print(wordle.hint_history)
+
+# if __name__ == "__main__":
+#     dict_path = './words.json'
+#     wordle = WordleGame(dict_path,answer='apple')
+#     wordle.guess('truck')
+#     wordle.guess('chair')
+#     wordle.guess('apple')
+#     print(wordle.hint_history)
 
     
     #wordle.play(char_hint=True)
