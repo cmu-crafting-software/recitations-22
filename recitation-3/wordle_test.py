@@ -1,19 +1,23 @@
+<<<<<<< HEAD
 from wordle import unique, hint_repeated_char as hrc, positions, check_guess, valid_guess_length
+=======
+from wordle import unique, hint_repeated_char, positions, check_guess
+>>>>>>> 12558073ed8fd7238344bea70474f480f326e839
 
 def test_hint_repeated_char() :
-    assert hrc([0,1], [0,1], ['_', '_']) == ['*', '*']
+    assert hint_repeated_char([0,1], [0,1], ['_', '_']) == ['*', '*']
 
 def test_hrc_letter_overlap() :
-    assert hrc([0,2], [1,2], ['_', '_', '_']) == ['$', '_', '*']
+    assert hint_repeated_char([0,2], [1,2], ['_', '_', '_']) == ['$', '_', '*']
 
 def test_hrc_letter_no_overlap():
-    assert hrc([0,1], [2], ['_','_','_']) == ['$','_','_']
+    assert hint_repeated_char([0,1], [2], ['_','_','_']) == ['$','_','_']
 
 def test_hrc_letter_no_overlap2():
-    assert hrc([0,2], [1], ['_','_','_']) == ['$','_','_']
+    assert hint_repeated_char([0,2], [1], ['_','_','_']) == ['$','_','_']
 
 def test_hrc_3():
-    assert hrc([0,1,2,3], [0,2,3], ['_','_','_','_']) == ['*','_','*','*']
+    assert hint_repeated_char([0,1,2,3], [0,2,3], ['_','_','_','_']) == ['*','_','*','*']
 
 def test_unique_oneletter() :
     assert unique('a', 0) == True
@@ -59,7 +63,13 @@ def test_check_guess_icack_check() :
 def test_check_guess_ccbcc_cacbc() :
     assert check_guess('ccbcc', 'cacbc') == '* $ $ _ *'
 
+<<<<<<< HEAD
 def test_valid_guess_length() :
     assert valid_guess_length('system') == False
     assert valid_guess_length('dog') == True
     assert valid_guess_length('piano') == True
+=======
+#TODO write at least one test for `valid_guess_length`
+#TODO write at least one test for `guess_in_dict`
+#TODO write at least one test for `pick_word`
+>>>>>>> 12558073ed8fd7238344bea70474f480f326e839
