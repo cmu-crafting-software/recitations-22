@@ -79,7 +79,11 @@ class WordleGame:
         """
         # `alphabet` is a set of lowercase ASCII letters
         alphabet = set(string.ascii_lowercase)
-        return set()
+        
+
+        used_but_incorrect = self.letters_used.difference(self.used_answer_letters)
+
+        return alphabet.difference(used_but_incorrect)
 
     def play(self, char_hint=False):
         """
@@ -90,6 +94,7 @@ class WordleGame:
             guess = input()
             last_answer = self.guess(guess)
             print(display_hint(last_answer))
+            #print(self.letters_used)
             if(char_hint):
                 valid_chars = list(self.valid_letters())
                 valid_chars.sort()
@@ -278,6 +283,42 @@ def play_wordle_games(n, dict_path):
     """
     Play the Wordle game `n` times.
     """
+    game_num = 0
+    guess_num = 0
+    end_num = 5
+    win_num = 0
+
+    wordle_game = WordleGame(dict_path)
+    char_hint = True
+    words = load_words(dict_path)
+
+    """
+    Play the wordle game in an interactive mode.
+    """
+    print("Welcome to Wordle. What is your first guess:")
+    while game_num<n:
+        while guess_num<end_num:
+            guess = pick_word(words)
+            last_answer = wordle_game.guess(guess)
+            print(display_hint(last_answer))
+            #print(self.letters_used)
+            if(char_hint):
+                valid_chars = list(wordle_game.valid_letters())
+                valid_chars.sort()
+                print("Valid characters left: ", valid_chars)
+            if wordle_game.game_won:
+                print("YAY! You won! Tweet your result:")
+                wordle_game.show_history()
+                win_num +=1
+            guess_num +=1
+            print(guess_num)
+        #char_hint = False
+        game_num += 1
+        guess_num =0
+        print(game_num)
+
+    print('success rate: ', win_num/n)
+
     # TODO: play the game n times:
     # TODO: instantiate a wordle game object
     # TODO: take 5 guesses randomly
@@ -288,6 +329,15 @@ def play_wordle_games(n, dict_path):
 
 if __name__ == "__main__":
     dict_path = './words.json'
+    n = 100
     wordle = WordleGame(dict_path)
-    wordle.play(char_hint=True)
+    play_wordle_games(10, dict_path)
+    
+   #part2
+    # wordle_p2 = WordleGame(dict_path, answer = 'apple')
+    # wordle_p2.guess('pizza')
+    # wordle_p2.guess('piano')
+    # wordle_p2.guess('apple')
+    # wordle_p2.show_history()
+    #wordle.play(char_hint=True)
     # TODO: play the wordle game using methods in `WordleGame`
