@@ -17,11 +17,12 @@ inner_join_readings_stations = readings.join(stations, on='station_id', how='inn
 
 print(inner_join_readings_stations.sort_values('id'))
 
+for method in ['inner','outer','left','right']:
 
-inner_join_readings_stations_stationsensors = inner_join_readings_stations.join(stations_sensors, on='station_id', how='inner')
+    join_readings_stations = readings.join(stations, on='station_id', how=method)
 
-print(inner_join_readings_stations_stationsensors.sort_values('id'))
+    join_readings_stations_stationsensors = join_readings_stations.join(stations_sensors, on='station_id', how=method)
 
-omni_join = inner_join_readings_stations_stationsensors.join(sensors, on='sensor_id', how = 'inner')
+    omni_join = join_readings_stations_stationsensors.join(sensors, on='sensor_id', how=method)
 
-print(omni_join.sort_values('id'))
+    print(omni_join)
