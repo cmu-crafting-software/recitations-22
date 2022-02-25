@@ -79,6 +79,9 @@ class WordleGame:
         """
         # `alphabet` is a set of lowercase ASCII letters
         alphabet = set(string.ascii_lowercase)
+        used_but_incorrect = self.letters_used.difference(
+            self.used_answer_letters
+        )
         return set()
 
     def play(self, char_hint=False):
@@ -241,8 +244,10 @@ def process_guess(guess_word, answer_word, dict):
     output is the INVALID_GUESS string.
     """
     if not valid_guess_length(guess_word):
+        #print("Your guess length is invalid:", guess_word)
         return INVALID_GUESS
     elif not(guess_in_dict(guess_word, dict)):
+        print("Your guess is not in dictionary:", guess_word)
         return INVALID_GUESS
     else:
         return check_guess(guess_word, answer_word)
@@ -288,6 +293,10 @@ def play_wordle_games(n, dict_path):
 
 if __name__ == "__main__":
     dict_path = './words.json'
-    wordle = WordleGame(dict_path)
-    wordle.play(char_hint=True)
+    wordle = WordleGame(dict_path, "apple")
+    # wordle.play(char_hint=True)
+    wordle.guess('hello')
+    wordle.guess('plane')
+    wordle.guess('apple')
+    wordle.show_history()
     # TODO: play the wordle game using methods in `WordleGame`
