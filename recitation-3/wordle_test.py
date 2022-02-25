@@ -1,4 +1,4 @@
-from wordle import unique, hint_repeated_char, positions, check_guess
+from wordle import unique, hint_repeated_char as hrc, positions, check_guess, valid_guess_length, guess_in_dict
 
 def test_hint_repeated_char() :
     assert hint_repeated_char([0,1], [0,1], ['_', '_']) == ['*', '*']
@@ -59,6 +59,14 @@ def test_check_guess_icack_check() :
 def test_check_guess_ccbcc_cacbc() :
     assert check_guess('ccbcc', 'cacbc') == '* $ $ _ *'
 
+<<<<<<< HEAD
+def test_valid_guess_length_abcdef() :
+    assert valid_guess_length('abcdef') == False
+
+def test_guess_in_dict_candy():
+    assert guess_in_dict('candy',{'candy'}) == True
+=======
 #TODO write at least one test for `valid_guess_length`
 #TODO write at least one test for `guess_in_dict`
 #TODO write at least one test for `pick_word`
+>>>>>>> origin/main

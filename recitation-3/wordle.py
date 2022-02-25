@@ -111,11 +111,15 @@ def check_guess(guess_word, answer_word) :
 
 def valid_guess_length(guess_word) :
     #TODO: check if `guess_word` is longer than MAX_SIZE
+    if len(guess_word) > SIZE:
+        return False
     #TODO: replace the line below
-    return False
+    return True
 
 def guess_in_dict(guess_word, dict) :
     #TODO: check if `guess_word` is in the dictionary
+    if guess_word in dict.values():
+        return True
     #TODO: replace the line below
     return False
 
