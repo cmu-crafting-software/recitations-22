@@ -24,6 +24,7 @@ GH Pages is a deployment service that lets you automatically deploy your website
 * Markdown (what you write in `README.md`) actually converts to HTML
 * The basic building blocks are similar
   * `<div>`: used as a container for HTML elements - which is then styled with CSS or manipulated with JavaScript
+  * Helpful cheatsheet: <https://developer.mozilla.org/en-US/docs/Learn/HTML/Cheatsheet>
 * CSS (Cascading Style Sheet): defines the **styling** of HTML components (e.g. color, margin, layout etc.)
   * Selectors: classes, ids, tag types
   * Inline styling
