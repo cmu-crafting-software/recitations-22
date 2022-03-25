@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.21.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.2"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style type="text/css">
+      * {
+        font-family: "Open Sans";
+        font-weight: 300;
+      }
+      .regular {
+        font-weight: 400;
+      }
+      .semibold {
+        font-weight: 600;
+      }
+      body {
+        max-width: max-content;
+        margin: auto;
+      }
+      #title,
+      #name {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="title">
+      <h1 class="semibold" style="margin-bottom: 0px">Embedding Vega-Lite</h1>
+    </div>
+    <div id="name">
+      <em>Crafting software recitation 7</em>
+    </div>
+    <br />
+    <div id="vis"></div>
+
+    <script type="text/javascript">
+      var yourVlSpec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+        description: "A simple bar chart with embedded data.",
+        height: 500,
+        width: 500,
+        data: {
+          values: [
+            { a: "A", b: 28 },
+            { a: "B", b: 55 },
+            { a: "C", b: 43 },
+            { a: "D", b: 91 },
+            { a: "E", b: 81 },
+            { a: "F", b: 53 },
+            { a: "G", b: 19 },
+            { a: "H", b: 87 },
+            { a: "I", b: 52 },
+          ],
+        },
+        mark: "bar",
+        encoding: {
+          x: { field: "a", type: "ordinal" },
+          y: { field: "b", type: "quantitative" },
+        },
+      };
+      vegaEmbed("#vis", yourVlSpec);
+    </script>
+  </body>
+</html>
