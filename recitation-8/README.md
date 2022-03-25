@@ -7,7 +7,7 @@ _22/03/25_
 
 ## Open issues
 
-* In `word.json`, pick your least favorite word, and open an issue to ask for its removal.
+* In `words.json`, pick your least favorite word, and open an issue to ask for its removal.
 * In the issue, you should include the following:
   * A meaningful title, e.g. "`aaa` shouldn't be in the word list."
   * A brief description to describe how to reproduce this issue
