@@ -4,9 +4,6 @@ __Wode "Nimo" Ni__
 
 _22/03/25_
 
-## Review code
-
-Let's review Nimo's most recent change to the wordle example from recitation 4.
 
 ## Open issues
 
@@ -41,3 +38,8 @@ Let's review Nimo's most recent change to the wordle example from recitation 4.
   * Approve the change
 * Close the PR
   * Use the "Squash and Merge" option
+
+
+## Review Nimo's code
+
+Let's review Nimo's most recent change to the wordle example from recitation 4.
