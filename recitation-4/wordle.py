@@ -79,7 +79,10 @@ class WordleGame:
         """
         # `alphabet` is a set of lowercase ASCII letters
         alphabet = set(string.ascii_lowercase)
-        return set()
+        # find all used but not correct letters
+        used_but_incorrect = self.letters_used.difference(self.used_answer_letters)
+
+        return alphabet.difference(used_but_incorrect)
 
     def play(self, char_hint=False):
         """
@@ -279,15 +282,31 @@ def play_wordle_games(n, dict_path):
     Play the Wordle game `n` times.
     """
     # TODO: play the game n times:
+    words = load_words(dict_path)
+    i = 1
+    n_guess = 5
+    wordle = WordleGame(dict_path, answer = 'apple')
+    while i <= n:
+        for val in range(1, n_guess):
+            guess_word = pick_word(words)
+            wordle.guess(guess_word)
+            wordle.show_history()
     # TODO: instantiate a wordle game object
     # TODO: take 5 guesses randomly
     # TODO: print the history of guesses
     # TODO: report success rate
+        i = i+1
     pass
 
 
 if __name__ == "__main__":
     dict_path = './words.json'
-    wordle = WordleGame(dict_path)
-    wordle.play(char_hint=True)
+    wordle = play_wordle_games(1, dict_path)
+   
+    #wordle = WordleGame(dict_path, answer = 'apple')
+    #wordle.guess("pizza")
+    #wordle.guess("crisp")
+    #wordle.guess("apple")
+    #wordle.show_history()
+    #wordle.play(char_hint=True)
     # TODO: play the wordle game using methods in `WordleGame`
