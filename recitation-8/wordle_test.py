@@ -1,5 +1,5 @@
 from wordle import guess_in_dict, unique, hint_repeated_char, positions, \
-    check_guess, valid_guess_length, pick_word, CORRECT, IN_WORD, INCORRECT
+    check_guess, valid_guess_length, pick_word, CORRECT, IN_WORD, INCORRECT, load_words, WordleGame
 
 
 def test_hint_repeated_char():
@@ -121,4 +121,9 @@ def test_gid_pizza():
 def test_gid_pizz():
     assert not(guess_in_dict('pizz', {'pizza': None}))
 
-# TODO write at least one test for `pick_word`
+
+def test_setup_anwser_animo():
+    dict_path = './words.json'
+    dictionary = load_words(dict_path)
+    wordle = WordleGame(dictionary, answer="animo")
+    assert wordle.answer_word == "animo"

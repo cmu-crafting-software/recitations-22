@@ -34,8 +34,8 @@ class WordleGame:
         Constructs a `WordleGame` object with an optional `answer` word.
         """
         self.words = words
-        # if there's a predefined answer, use it
-        if answer:
+        # if there's a predefined answer and that answer is in the dictionary, use it
+        if answer and answer in words.keys():
             self.answer_word = answer
         # otherwise, generate a new answer word from the dictionary
         else:

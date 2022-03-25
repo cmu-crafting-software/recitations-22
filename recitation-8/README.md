@@ -4,10 +4,6 @@ __Wode "Nimo" Ni__
 
 _22/03/25_
 
-## Review code
-
-Let's review Nimo's most recent change to the wordle example from recitation 4.
-
 ## Open issues
 
 * In `word.json`, pick your least favorite word, and open an issue to ask for its removal.
@@ -41,3 +37,10 @@ Let's review Nimo's most recent change to the wordle example from recitation 4.
   * Approve the change
 * Close the PR
   * Use the "Squash and Merge" option
+
+## Review code
+
+Let's review Nimo's most recent change to the wordle example.
+
+
+
