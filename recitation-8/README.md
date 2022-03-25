@@ -1,4 +1,4 @@
-# Recitation 8: issues, PRs, and Code Review 
+# Recitation 8: issues, PRs, and code review 
 
 __Wode "Nimo" Ni__
 
@@ -43,3 +43,9 @@ _22/03/25_
 ## Review Nimo's code
 
 Let's review Nimo's most recent change to the wordle example from recitation 4.
+
+* Read Nimo's PR first: <https://github.com/cmu-crafting-software/recitations-22/pull/7>
+* Notice the little ❌, it indicates failed tests in the continuous integration (CI) tasks. Click on it to view what went wrong.
+* In your review, find out what went wrong and leave comments on how to fix it. 
+* When you are done, submit your review and "Request Changes"
+
